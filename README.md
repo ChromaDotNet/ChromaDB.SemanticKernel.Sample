@@ -21,7 +21,7 @@ docker compose up -d
 dotnet run --project src/RentalAssistant
 ```
 
-The first `docker compose up` downloads the two models, about 2 GB; `docker compose logs -f ollama-models` shows the progress.
+The first `docker compose up` downloads the two models, about 2 GB; `docker compose logs -f ollama-models` shows the progress. The chat model answers at temperature 0 and the images are pinned, so on the same machine every run gives these same answers.
 
 An actual run:
 
@@ -31,7 +31,7 @@ An e-bike costs 30 euros for a whole day at Lakeside Bike Rental.
 > Can I return the bike at another shop?
 Yes, you can return the bike at any of our three shops: Harbour, Old Town, or Lakeside Station.
 > Is there a discount code I can use?
-No, the passage only mentions that students and groups of five or more get a 10% discount. No specific discount code is provided.
+No, there is no specific discount code mentioned in the information provided. The passage only mentions that students and groups of five or more get a 10% discount by showing their student card.
 ```
 
 The staff notes include a discount code, but they are in another namespace: the search in Chroma never returns them, so the model never sees the code.
@@ -52,4 +52,6 @@ The staff notes include a discount code, but they are in another namespace: the 
 dotnet test
 ```
 
-The tests start Chroma in a container with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers), so they need Docker, but no model: the embeddings come from word hashes and the chat model only records the prompt it receives. They check that the documents are stored in Chroma, that storing them again replaces them, that the passage that answers each question reaches the prompt, and that the staff notes never do.
+GitHub Actions runs them on every push.
+
+The tests start Chroma in a container with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers), so they need Docker, but no model: the embeddings come from word hashes and the chat model only records the prompt it receives. They check that the documents are stored in Chroma, that storing them again replaces them, that the passage that answers each question reaches the prompt, that the staff notes never do, and that the prompt asks the model for temperature 0.
