@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ChromaDotNet.VectorData" Version="0.1.2" />
+    <PackageReference Include="ChromaDotNet.VectorData" Version="0.2.0" />
     <PackageReference Include="Microsoft.Extensions.AI" Version="10.10.0" />
     <PackageReference Include="Microsoft.SemanticKernel" Version="1.80.1" />
     <PackageReference Include="Microsoft.SemanticKernel.PromptTemplates.Handlebars" Version="1.80.1" />
