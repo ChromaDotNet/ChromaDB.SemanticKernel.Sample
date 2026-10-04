@@ -63,6 +63,17 @@ public sealed class RentalAssistantTests(ChromaFixture chroma) : IClassFixture<C
         Assert.DoesNotContain("STAFF50", model.LastMessagesText);
     }
 
+    [Fact]
+    public async Task Asks_the_model_for_the_most_likely_answer()
+    {
+        var model = new RecordingChatClient();
+        using var assistant = await CreateAssistantAsync(model);
+
+        await assistant.AskAsync("Can I return the bike at another shop?", _cancellationToken);
+
+        Assert.Equal(0f, model.LastOptions?.Temperature);
+    }
+
     private Task<RentalAssistant> CreateAssistantAsync(RecordingChatClient model)
         => RentalAssistant.CreateAsync(model, chroma.VectorStore, ChromaFixture.EmbeddingDimensions, _cancellationToken);
 }

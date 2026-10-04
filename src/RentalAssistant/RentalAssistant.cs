@@ -64,9 +64,12 @@ public sealed class RentalAssistant : IDisposable
         builder.Plugins.Add(store.CreateWithGetTextSearchResults("Shop"));
         var kernel = builder.Build();
 
-        var answer = kernel.CreateFunctionFromPrompt(
-            new PromptTemplateConfig(Prompt) { TemplateFormat = HandlebarsPromptTemplateFactory.HandlebarsTemplateFormat },
-            new HandlebarsPromptTemplateFactory());
+        var promptConfig = new PromptTemplateConfig(Prompt) { TemplateFormat = HandlebarsPromptTemplateFactory.HandlebarsTemplateFormat };
+
+        // Temperature 0: the model always picks the most likely words, so the same question gets the same answer.
+        promptConfig.AddExecutionSettings(new PromptExecutionSettings { ExtensionData = new Dictionary<string, object> { ["temperature"] = 0 } });
+
+        var answer = kernel.CreateFunctionFromPrompt(promptConfig, new HandlebarsPromptTemplateFactory());
 
         return new RentalAssistant(store, kernel, answer);
     }
