@@ -33,7 +33,7 @@ public class VectorStoreChromaContainerFixture : IAsyncLifetime
             {
                 try
                 {
-                    await chromaClient.ListCollections();
+                    await chromaClient.ListCollectionsAsync();
                     succeeded = true;
                 }
                 catch (Exception)
