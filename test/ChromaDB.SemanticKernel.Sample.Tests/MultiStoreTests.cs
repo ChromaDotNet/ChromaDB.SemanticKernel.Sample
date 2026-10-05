@@ -45,7 +45,7 @@ public sealed class MultiStoreTests(ChromaFixture fixture, ITestOutputHelper tes
         AssertResults(output);
     }
 
-    // The two searches find the entry they ask about, and the filter on the category leaves out the third entry.
+    // The two searches find the entry they ask about, and the filter on the category leaves out the entry of the other category, Connectors.
     private static void AssertResults(RecordingOutput output)
         => Assert.Collection(
             output.Lines.Where(line => (line.StartsWith("Result") && !line.Contains("Score")) || line.StartsWith("Number of results")),

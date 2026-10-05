@@ -1,6 +1,6 @@
 # ChromaDB.SemanticKernel.Sample
 
-[Semantic Kernel](https://learn.microsoft.com/semantic-kernel/) samples that use [Chroma](https://www.trychroma.com/) as the vector store, through [ChromaDotNet.VectorData](https://www.nuget.org/packages/ChromaDotNet.VectorData). They follow the form of the .NET samples of Semantic Kernel, the [concept samples](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/Concepts) and the [steps of text search](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/GettingStartedWithTextSearch): each sample is an xUnit test that runs against real models, with Chroma in place of the vector store of the original sample. The samples that use a chat model also come with models that run locally in Ollama.
+[Semantic Kernel](https://learn.microsoft.com/semantic-kernel/) samples that use [Chroma](https://www.trychroma.com/) as the vector store, through [ChromaDotNet.VectorData](https://www.nuget.org/packages/ChromaDotNet.VectorData). They follow the form of the .NET samples of Semantic Kernel, the [concept samples](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/Concepts) and the [steps of text search](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/GettingStartedWithTextSearch): each sample is an xUnit test that runs against real models when it needs one, with Chroma in place of the vector store of the original sample. The samples that use a chat model also come with models that run locally in Ollama.
 
 > This is a community project. It is not affiliated with or endorsed by Chroma.
 
@@ -31,7 +31,7 @@ dotnet user-secrets set "AzureOpenAIEmbeddings:Endpoint" "https://your-resource.
 dotnet user-secrets set "AzureOpenAIEmbeddings:DeploymentName" "..." --project samples/Concepts
 ```
 
-The embedding deployment must produce embeddings with 1,536 dimensions, like `text-embedding-3-small` or `text-embedding-3-large`. The samples sign in with the Azure CLI (`az login`), with an identity that can use the deployments, like one with the Cognitive Services OpenAI User role, or the Foundry User role on a Microsoft Foundry resource.
+The samples ask the embedding deployment for 1,536 dimensions, so it must be a model that can produce them, like `text-embedding-3-small` or `text-embedding-3-large`. The samples sign in with the Azure CLI (`az login`), with an identity that can use the deployments, like one with the Cognitive Services OpenAI User role, or the Foundry User role on a Microsoft Foundry resource.
 
 ```bash
 dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_VectorSearch_MultiStore_Chroma." --logger "console;verbosity=detailed"
@@ -67,7 +67,7 @@ dotnet test samples/Concepts --filter "FullyQualifiedName~Agents.ChatCompletion_
 dotnet test samples/GettingStartedWithTextSearch --filter "FullyQualifiedName~Step5_Search_With_Chroma_Ollama." --logger "console;verbosity=detailed"
 ```
 
-The defaults match the compose file. To change them, set `Ollama:Endpoint`, `Ollama:ModelId`, `Ollama:EmbeddingModelId` and `Ollama:EmbeddingDimensions`; the data model of `Step5_Search_With_Chroma_Ollama` has the 768 dimensions of `nomic-embed-text` in its attribute. A larger chat model than `qwen2.5:3b` gives better answers: it answers from the documents, but it can add made-up links when they have no source.
+The defaults match the compose file. To change them, set `Ollama:Endpoint`, `Ollama:ModelId`, `Ollama:EmbeddingModelId` and `Ollama:EmbeddingDimensions`; the data model of `Step5_Search_With_Chroma_Ollama`, in [ChromaVectorStoreOllamaFixture.cs](./samples/GettingStartedWithTextSearch/ChromaVectorStoreOllamaFixture.cs), has the 768 dimensions of `nomic-embed-text` in its attribute. A larger chat model than `qwen2.5:3b` gives better answers: it answers from the documents, but it can add made-up links when they have no source.
 
 ## Tests
 
@@ -75,11 +75,11 @@ The defaults match the compose file. To change them, set `Ollama:Endpoint`, `Oll
 dotnet test test/ChromaDB.SemanticKernel.Sample.Tests
 ```
 
-GitHub Actions runs them on every push.
+GitHub Actions runs them on every push to `main` and on every pull request to `main`.
 
-The tests run the scenario of each sample, with the same configuration, against Chroma in a container started on a free port with ChromaDotNet.Testcontainers. They need Docker, but no model: the embeddings come from word hashes and the chat model only records what it receives.
+The tests run the scenario of each sample except the hybrid search, which needs Chroma Cloud, with the same configuration, against Chroma in a container started on a free port with ChromaDotNet.Testcontainers. They need Docker, but no model: the embeddings come from word hashes and the chat model only records what it receives.
 
-- Vector search: each search finds the glossary entry it asks about, and the filter on the category leaves out the third entry, with and without dependency injection.
+- Vector search: each search finds the glossary entry it asks about, and the filter on the category leaves out the entry of the other category, Connectors, with and without dependency injection.
 - Data models: a record written as a dictionary reads back as the .NET data model, and the other way round, vector included.
 - Paging: the pages go through each of the 1,000 records once, in the order of the distance.
 - RAG: the document that answers each question reaches the model, and with a search namespace only the documents of the namespace reach it, with their source.

@@ -1,5 +1,5 @@
 # Ollama for the samples that run the models locally: docker compose up -d
-# The samples start Chroma themselves, in a container on port 8000.
+# The samples start Chroma themselves: the concept samples on port 8000, the text search steps on a free port.
 services:
   ollama:
     image: ollama/ollama:0.35.1
