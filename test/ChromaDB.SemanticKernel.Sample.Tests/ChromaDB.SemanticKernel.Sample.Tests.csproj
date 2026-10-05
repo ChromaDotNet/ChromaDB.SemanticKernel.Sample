@@ -4,16 +4,15 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <!-- Required by xUnit v3. -->
-    <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
-    <NoWarn>$(NoWarn);SKEXP0001;SKEXP0130</NoWarn>
+    <NoWarn>$(NoWarn);SKEXP0001;SKEXP0110;SKEXP0130</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="ChromaDotNet.Testcontainers" Version="0.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
-    <PackageReference Include="xunit.v3" Version="3.2.2" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.abstractions" Version="2.0.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -22,10 +21,11 @@
 
   <ItemGroup>
     <Using Include="Xunit" />
+    <Using Include="Xunit.Abstractions" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RentalAssistant\RentalAssistant.csproj" />
+    <ProjectReference Include="..\..\samples\Concepts\Concepts.csproj" />
   </ItemGroup>
 
 </Project>

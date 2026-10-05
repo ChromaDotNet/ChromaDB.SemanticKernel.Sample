@@ -1,0 +1,55 @@
+using ChromaDB.Client;
+using Docker.DotNet;
+
+namespace Memory.VectorStoreFixtures;
+
+/// <summary>
+/// Fixture to use for creating a Chroma container before tests and delete it after tests.
+/// </summary>
+public class VectorStoreChromaContainerFixture : IAsyncLifetime
+{
+    private DockerClient? _dockerClient;
+    private string? _chromaContainerId;
+
+    public async Task InitializeAsync()
+    {
+    }
+
+    public async Task ManualInitializeAsync()
+    {
+        if (this._chromaContainerId == null)
+        {
+            // Connect to docker and start the docker container.
+            using var dockerClientConfiguration = new DockerClientConfiguration();
+            this._dockerClient = dockerClientConfiguration.CreateClient();
+            this._chromaContainerId = await VectorStoreInfra.SetupChromaContainerAsync(this._dockerClient);
+
+            // Delay until the Chroma server is ready.
+            using var httpClient = new HttpClient();
+            var chromaClient = new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient);
+            var succeeded = false;
+            var attemptCount = 0;
+            while (!succeeded && attemptCount++ < 10)
+            {
+                try
+                {
+                    await chromaClient.ListCollections();
+                    succeeded = true;
+                }
+                catch (Exception)
+                {
+                    await Task.Delay(1000);
+                }
+            }
+        }
+    }
+
+    public async Task DisposeAsync()
+    {
+        if (this._dockerClient != null && this._chromaContainerId != null)
+        {
+            // Delete docker container.
+            await VectorStoreInfra.DeleteContainerAsync(this._dockerClient, this._chromaContainerId);
+        }
+    }
+}

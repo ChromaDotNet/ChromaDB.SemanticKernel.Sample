@@ -1,6 +1,6 @@
 using Microsoft.Extensions.AI;
 
-namespace RentalAssistant.Tests;
+namespace ChromaDB.SemanticKernel.Sample.Tests;
 
 /// <summary>
 /// A chat model that answers "Noted." and records the messages the agent sends to it, context included.
