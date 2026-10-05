@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft. All rights reserved.
+
 using System.Text.Json;
 using Azure.AI.OpenAI;
 using Azure.Identity;

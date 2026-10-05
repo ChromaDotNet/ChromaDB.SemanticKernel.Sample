@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft. All rights reserved.
+
 using System.Reflection;
 using ChromaDB.Client;
 using ChromaDB.VectorData;

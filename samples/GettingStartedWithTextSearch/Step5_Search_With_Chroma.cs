@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft. All rights reserved.
+
 using Azure.Identity;
 using ChromaDB.VectorData;
 using Microsoft.SemanticKernel;
