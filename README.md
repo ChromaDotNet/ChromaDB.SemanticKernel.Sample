@@ -17,7 +17,7 @@
 | [Step5_Search_With_Chroma](./samples/GettingStartedWithTextSearch/Step5_Search_With_Chroma.cs) | Searches records with a data model of their own in Chroma through `VectorStoreTextSearch`, then gives the results to the model in a Handlebars prompt, or gives the search to the model as a function to call. In the form of [Step4_Search_With_VectorStore](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/GettingStartedWithTextSearch/Step4_Search_With_VectorStore.cs). |
 | [Step5_Search_With_Chroma_Ollama](./samples/GettingStartedWithTextSearch/Step5_Search_With_Chroma_Ollama.cs) | The same sample with models that run locally in Ollama. |
 
-The samples need Docker, except the hybrid search sample, which runs on Chroma Cloud: their fixtures start Chroma in a container and remove it at the end. The fixture of the concept samples starts it on port 8000, as the vector store samples of Semantic Kernel do with their databases, so those samples also need a free port 8000. The fixture of the text search steps starts it on a free port with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers).
+The samples need the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0), and Docker, except the hybrid search sample, which runs on Chroma Cloud: their fixtures start Chroma in a container and remove it at the end. The fixture of the concept samples starts it on port 8000, as the vector store samples of Semantic Kernel do with their databases, so those samples also need a free port 8000. The fixture of the text search steps starts it on a free port with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers).
 
 ## Run the samples with Azure OpenAI
 
