@@ -1,3 +1,5 @@
+// Copyright (c) Microsoft. All rights reserved.
+
 using ChromaDB.Client;
 using Docker.DotNet;
 
