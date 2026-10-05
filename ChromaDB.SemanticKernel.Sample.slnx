@@ -1,8 +1,8 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/RentalAssistant/RentalAssistant.csproj" />
+  <Folder Name="/samples/">
+    <Project Path="samples/Concepts/Concepts.csproj" />
   </Folder>
   <Folder Name="/test/">
-    <Project Path="test/RentalAssistant.Tests/RentalAssistant.Tests.csproj" />
+    <Project Path="test/ChromaDB.SemanticKernel.Sample.Tests/ChromaDB.SemanticKernel.Sample.Tests.csproj" />
   </Folder>
 </Solution>

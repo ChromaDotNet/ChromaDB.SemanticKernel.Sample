@@ -22,6 +22,7 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      # The tests start Chroma in a container with Testcontainers, on the Docker of the runner, and use no model.
+      # The samples are tests too, but they need the models. The tests run the scenario of each sample
+      # without a model, against Chroma in a container started with Testcontainers on the Docker of the runner.
       - name: Test
-        run: dotnet test
+        run: dotnet test test/ChromaDB.SemanticKernel.Sample.Tests

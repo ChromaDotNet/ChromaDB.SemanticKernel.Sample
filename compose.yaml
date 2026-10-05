@@ -1,12 +1,6 @@
-# Chroma and Ollama for the sample: docker compose up -d
+# Ollama for the samples that run the models locally: docker compose up -d
+# The samples start Chroma themselves, in a container on port 8000.
 services:
-  chroma:
-    image: chromadb/chroma:1.5.9
-    ports:
-      - "8000:8000"
-    volumes:
-      - chroma:/data
-
   ollama:
     image: ollama/ollama:0.35.1
     ports:
@@ -21,8 +15,7 @@ services:
       - ollama
     environment:
       OLLAMA_HOST: ollama:11434
-    entrypoint: ["/bin/sh", "-c", "ollama pull qwen2.5:3b && ollama pull all-minilm"]
+    entrypoint: ["/bin/sh", "-c", "ollama pull qwen2.5:3b && ollama pull nomic-embed-text"]
 
 volumes:
-  chroma:
   ollama:
