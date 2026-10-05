@@ -9,6 +9,8 @@
 | Sample | Description |
 |---|---|
 | [VectorStore_VectorSearch_MultiStore_Chroma](./samples/Concepts/Memory/VectorStore_VectorSearch_MultiStore_Chroma.cs) | Ingests a glossary into Chroma and searches it, also with a filter, through the common code of the vector store samples, with and without dependency injection. In the form of [VectorStore_VectorSearch_MultiStore_Qdrant](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_VectorSearch_MultiStore_Qdrant.cs). |
+| [VectorStore_DynamicDataModel_Interop_Chroma](./samples/Concepts/Memory/VectorStore_DynamicDataModel_Interop_Chroma.cs) | Writes records as dictionaries described by a record definition and reads them back as a .NET data model, and the other way round. In the form of [VectorStore_DynamicDataModel_Interop](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_DynamicDataModel_Interop.cs). |
+| [VectorStore_VectorSearch_Paging_Chroma](./samples/Concepts/Memory/VectorStore_VectorSearch_Paging_Chroma.cs) | Pages through the results of a vector search over 1,000 records with `Top` and `Skip`, without a model. In the form of [VectorStore_VectorSearch_Paging](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_VectorSearch_Paging.cs), with the Euclidean distance: Chroma searches with an approximate index, which with the cosine distance can miss some of the made-up vectors of the sample. |
 | [ChatCompletion_Rag_Chroma](./samples/Concepts/Agents/ChatCompletion_Rag_Chroma.cs) | A `ChatCompletionAgent` that answers from documents stored in Chroma by a `TextSearchStore`, through a `TextSearchProvider`, also with citations and a search namespace. In the form of [ChatCompletion_Rag](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Agents/ChatCompletion_Rag.cs). |
 | [ChatCompletion_Rag_Chroma_Ollama](./samples/Concepts/Agents/ChatCompletion_Rag_Chroma_Ollama.cs) | The same sample with models that run locally in Ollama. |
 | [Step5_Search_With_Chroma](./samples/GettingStartedWithTextSearch/Step5_Search_With_Chroma.cs) | Searches records with a data model of their own in Chroma through `VectorStoreTextSearch`, then gives the results to the model in a Handlebars prompt, or gives the search to the model as a function to call. In the form of [Step4_Search_With_VectorStore](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/GettingStartedWithTextSearch/Step4_Search_With_VectorStore.cs). |
@@ -32,8 +34,15 @@ The embedding deployment must produce embeddings with 1,536 dimensions, like `te
 
 ```bash
 dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_VectorSearch_MultiStore_Chroma." --logger "console;verbosity=detailed"
+dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_DynamicDataModel_Interop_Chroma." --logger "console;verbosity=detailed"
 dotnet test samples/Concepts --filter "FullyQualifiedName~Agents.ChatCompletion_Rag_Chroma." --logger "console;verbosity=detailed"
 dotnet test samples/GettingStartedWithTextSearch --filter "FullyQualifiedName~Step5_Search_With_Chroma." --logger "console;verbosity=detailed"
+```
+
+The paging sample needs no model:
+
+```bash
+dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_VectorSearch_Paging_Chroma." --logger "console;verbosity=detailed"
 ```
 
 ## Run the samples with Ollama
@@ -59,6 +68,8 @@ GitHub Actions runs them on every push.
 The tests run the scenario of each sample, with the same configuration, against Chroma in a container started on a free port with ChromaDotNet.Testcontainers. They need Docker, but no model: the embeddings come from word hashes and the chat model only records what it receives.
 
 - Vector search: each search finds the glossary entry it asks about, and the filter on the category leaves out the third entry, with and without dependency injection.
+- Data models: a record written as a dictionary reads back as the .NET data model, and the other way round, vector included.
+- Paging: the pages go through each of the 1,000 records once, in the order of the distance.
 - RAG: the document that answers each question reaches the model, and with a search namespace only the documents of the namespace reach it, with their source.
 - Text search: the search returns the records with their key, text and link, the Handlebars prompt receives the search results, and with function calling the results of the search reach the model.
 
