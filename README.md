@@ -11,12 +11,13 @@
 | [VectorStore_VectorSearch_MultiStore_Chroma](./samples/Concepts/Memory/VectorStore_VectorSearch_MultiStore_Chroma.cs) | Ingests a glossary into Chroma and searches it, also with a filter, through the common code of the vector store samples, with and without dependency injection. In the form of [VectorStore_VectorSearch_MultiStore_Qdrant](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_VectorSearch_MultiStore_Qdrant.cs). |
 | [VectorStore_DynamicDataModel_Interop_Chroma](./samples/Concepts/Memory/VectorStore_DynamicDataModel_Interop_Chroma.cs) | Writes records as dictionaries described by a record definition and reads them back as a .NET data model, and the other way round. In the form of [VectorStore_DynamicDataModel_Interop](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_DynamicDataModel_Interop.cs). |
 | [VectorStore_VectorSearch_Paging_Chroma](./samples/Concepts/Memory/VectorStore_VectorSearch_Paging_Chroma.cs) | Pages through the results of a vector search over 1,000 records with `Top` and `Skip`, without a model. In the form of [VectorStore_VectorSearch_Paging](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_VectorSearch_Paging.cs), with the Euclidean distance: Chroma searches with an approximate index, which with the cosine distance can miss some of the made-up vectors of the sample. |
+| [VectorStore_HybridSearch_Simple_Chroma](./samples/Concepts/Memory/VectorStore_HybridSearch_Simple_Chroma.cs) | Searches a glossary with a vector and keywords, also with a filter, on Chroma Cloud, in a collection that the vector store creates with a BM25 index for the full-text indexed property. In the form of [VectorStore_HybridSearch_Simple_AzureAISearch](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Memory/VectorStore_HybridSearch_Simple_AzureAISearch.cs). |
 | [ChatCompletion_Rag_Chroma](./samples/Concepts/Agents/ChatCompletion_Rag_Chroma.cs) | A `ChatCompletionAgent` that answers from documents stored in Chroma by a `TextSearchStore`, through a `TextSearchProvider`, also with citations and a search namespace. In the form of [ChatCompletion_Rag](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/Concepts/Agents/ChatCompletion_Rag.cs). |
 | [ChatCompletion_Rag_Chroma_Ollama](./samples/Concepts/Agents/ChatCompletion_Rag_Chroma_Ollama.cs) | The same sample with models that run locally in Ollama. |
 | [Step5_Search_With_Chroma](./samples/GettingStartedWithTextSearch/Step5_Search_With_Chroma.cs) | Searches records with a data model of their own in Chroma through `VectorStoreTextSearch`, then gives the results to the model in a Handlebars prompt, or gives the search to the model as a function to call. In the form of [Step4_Search_With_VectorStore](https://github.com/microsoft/semantic-kernel/blob/main/dotnet/samples/GettingStartedWithTextSearch/Step4_Search_With_VectorStore.cs). |
 | [Step5_Search_With_Chroma_Ollama](./samples/GettingStartedWithTextSearch/Step5_Search_With_Chroma_Ollama.cs) | The same sample with models that run locally in Ollama. |
 
-The samples need Docker: their fixtures start Chroma in a container and remove it at the end. The fixture of the concept samples starts it on port 8000, as the vector store samples of Semantic Kernel do with their databases, so those samples also need a free port 8000. The fixture of the text search steps starts it on a free port with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers).
+The samples need Docker, except the hybrid search sample, which runs on Chroma Cloud: their fixtures start Chroma in a container and remove it at the end. The fixture of the concept samples starts it on port 8000, as the vector store samples of Semantic Kernel do with their databases, so those samples also need a free port 8000. The fixture of the text search steps starts it on a free port with [ChromaDotNet.Testcontainers](https://www.nuget.org/packages/ChromaDotNet.Testcontainers).
 
 ## Run the samples with Azure OpenAI
 
@@ -37,6 +38,17 @@ dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_Vec
 dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_DynamicDataModel_Interop_Chroma." --logger "console;verbosity=detailed"
 dotnet test samples/Concepts --filter "FullyQualifiedName~Agents.ChatCompletion_Rag_Chroma." --logger "console;verbosity=detailed"
 dotnet test samples/GettingStartedWithTextSearch --filter "FullyQualifiedName~Step5_Search_With_Chroma." --logger "console;verbosity=detailed"
+```
+
+The hybrid search sample runs on Chroma Cloud, which supports hybrid search, with the tenant and the database of its dashboard. It deletes its collection at the end:
+
+```bash
+dotnet user-secrets set "Chroma:Endpoint" "https://api.trychroma.com" --project samples/Concepts
+dotnet user-secrets set "Chroma:ApiKey" "..." --project samples/Concepts
+dotnet user-secrets set "Chroma:Tenant" "..." --project samples/Concepts
+dotnet user-secrets set "Chroma:Database" "..." --project samples/Concepts
+
+dotnet test samples/Concepts --filter "FullyQualifiedName~Memory.VectorStore_HybridSearch_Simple_Chroma." --logger "console;verbosity=detailed"
 ```
 
 The paging sample needs no model:

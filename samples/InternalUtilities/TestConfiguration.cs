@@ -22,6 +22,7 @@ public sealed class TestConfiguration
     public static OllamaConfig Ollama => LoadSection<OllamaConfig>(optional: true);
     public static AzureOpenAIConfig AzureOpenAI => LoadSection<AzureOpenAIConfig>();
     public static AzureOpenAIEmbeddingsConfig AzureOpenAIEmbeddings => LoadSection<AzureOpenAIEmbeddingsConfig>();
+    public static ChromaConfig Chroma => LoadSection<ChromaConfig>();
 
     private static T LoadSection<T>(bool optional = false, [CallerMemberName] string? caller = null) where T : new()
     {
@@ -52,6 +53,17 @@ public sealed class TestConfiguration
         public string DeploymentName { get; set; }
         public string Endpoint { get; set; }
         public string ApiKey { get; set; }
+    }
+
+    /// <summary>
+    /// A Chroma server, like Chroma Cloud with the tenant and the database of its dashboard.
+    /// </summary>
+    public class ChromaConfig
+    {
+        public string Endpoint { get; set; }
+        public string ApiKey { get; set; }
+        public string Tenant { get; set; }
+        public string Database { get; set; }
     }
 
     /// <summary>
