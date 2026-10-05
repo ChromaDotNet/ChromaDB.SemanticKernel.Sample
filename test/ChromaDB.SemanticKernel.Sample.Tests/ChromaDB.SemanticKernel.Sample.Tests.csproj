@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\samples\Concepts\Concepts.csproj" />
+    <ProjectReference Include="..\..\samples\GettingStartedWithTextSearch\GettingStartedWithTextSearch.csproj" />
   </ItemGroup>
 
 </Project>
