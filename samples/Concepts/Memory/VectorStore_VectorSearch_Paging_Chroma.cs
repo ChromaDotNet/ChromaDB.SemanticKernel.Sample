@@ -25,7 +25,7 @@ public class VectorStore_VectorSearch_Paging_Chroma(ITestOutputHelper output, Ve
         // Initiate the docker container and construct the Chroma vector store.
         await chromaFixture.ManualInitializeAsync();
         using var httpClient = new HttpClient();
-        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient));
+        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient), ownsClient: true);
 
         // Get and create collection if it doesn't exist.
         // Chroma supports string and Guid keys.

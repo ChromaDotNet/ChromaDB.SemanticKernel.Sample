@@ -57,7 +57,7 @@ public sealed class ChatCompletionRagTests(ChromaFixture fixture) : IClassFixtur
     }
 
     private ChromaVectorStore CreateVectorStore(HttpClient httpClient)
-        => new(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient), new() { EmbeddingGenerator = new WordEmbeddingGenerator(EmbeddingDimensions) });
+        => new(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient), ownsClient: true, new() { EmbeddingGenerator = new WordEmbeddingGenerator(EmbeddingDimensions) });
 
     private static (ChatCompletionAgent Agent, RecordingChatClient Model) CreateAgent()
     {

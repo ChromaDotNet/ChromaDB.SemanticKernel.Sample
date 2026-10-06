@@ -67,7 +67,7 @@ public class VectorStore_VectorSearch_MultiStore_Chroma(ITestOutputHelper output
         await chromaFixture.ManualInitializeAsync();
         using var httpClient = new HttpClient();
         var chromaClient = new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient);
-        using var vectorStore = new ChromaVectorStore(chromaClient);
+        using var vectorStore = new ChromaVectorStore(chromaClient, ownsClient: true);
 
         // Create the common processor that works for any vector store.
         var processor = new VectorStore_VectorSearch_MultiStore_Common(vectorStore, embeddingGenerator, this.Output);

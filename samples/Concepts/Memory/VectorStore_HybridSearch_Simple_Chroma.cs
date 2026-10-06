@@ -14,7 +14,7 @@ namespace Memory;
 ///
 /// The example shows the following steps:
 /// 1. Create an embedding generator.
-/// 2. Create a Chroma Vector Store that creates a BM25 index for the full-text indexed properties of its collections.
+/// 2. Create a Chroma Vector Store: on Chroma Cloud, its collections get a BM25 index for each full-text indexed property.
 /// 3. Ingest some data into the vector store.
 /// 4. Do a hybrid search on the vector store with various text+keyword and filtering options.
 ///
@@ -30,7 +30,7 @@ public class VectorStore_HybridSearch_Simple_Chroma(ITestOutputHelper output) : 
             .GetEmbeddingClient(TestConfiguration.AzureOpenAIEmbeddings.DeploymentName)
             .AsIEmbeddingGenerator(1536);
 
-        // Construct the Chroma VectorStore, which creates the collections with a BM25 index for each full-text indexed property.
+        // Construct the Chroma VectorStore. On Chroma Cloud, creating a collection creates a BM25 index for each full-text indexed property, which the hybrid search uses.
         using var httpClient = new HttpClient();
         var chromaClient = new ChromaClient(
             new ChromaConfigurationOptions(
@@ -39,7 +39,7 @@ public class VectorStore_HybridSearch_Simple_Chroma(ITestOutputHelper output) : 
                 database: TestConfiguration.Chroma.Database,
                 chromaToken: TestConfiguration.Chroma.ApiKey),
             httpClient);
-        using var vectorStore = new ChromaVectorStore(chromaClient, new() { CreateBm25Indexes = true });
+        using var vectorStore = new ChromaVectorStore(chromaClient, ownsClient: true);
 
         // Get and create collection if it doesn't exist.
         var collection = vectorStore.GetCollection<string, Glossary>("skglossary");

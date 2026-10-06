@@ -105,7 +105,7 @@ public sealed class DataModelAndPagingTests(ChromaFixture fixture) : IClassFixtu
     }
 
     private ChromaVectorStore CreateVectorStore(HttpClient httpClient)
-        => new(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient));
+        => new(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient), ownsClient: true);
 
     private sealed class Glossary
     {
