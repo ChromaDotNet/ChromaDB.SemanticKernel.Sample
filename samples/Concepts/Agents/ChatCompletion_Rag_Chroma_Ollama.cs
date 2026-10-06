@@ -48,6 +48,7 @@ public class ChatCompletion_Rag_Chroma_Ollama(ITestOutputHelper output, VectorSt
         using var httpClient = new HttpClient();
         using var vectorStore = new ChromaVectorStore(
             new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient),
+            ownsClient: true,
             new() { EmbeddingGenerator = embeddingGenerator });
 
         // Create a store that uses a built in schema for storing text documents
@@ -113,6 +114,7 @@ public class ChatCompletion_Rag_Chroma_Ollama(ITestOutputHelper output, VectorSt
         using var httpClient = new HttpClient();
         using var vectorStore = new ChromaVectorStore(
             new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient),
+            ownsClient: true,
             new() { EmbeddingGenerator = embeddingGenerator });
 
         // Create a store that uses a built in schema for storing text documents

@@ -49,7 +49,7 @@ public class VectorStore_DynamicDataModel_Interop_Chroma(ITestOutputHelper outpu
         // Initiate the docker container and construct the vector store.
         await chromaFixture.ManualInitializeAsync();
         using var httpClient = new HttpClient();
-        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient));
+        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient), ownsClient: true);
 
         // Get and create collection if it doesn't exist using the dynamic data model and record definition that defines the schema.
         var dynamicDataModelCollection = vectorStore.GetDynamicCollection("skglossary", s_definition);
@@ -87,7 +87,7 @@ public class VectorStore_DynamicDataModel_Interop_Chroma(ITestOutputHelper outpu
         // Initiate the docker container and construct the vector store.
         await chromaFixture.ManualInitializeAsync();
         using var httpClient = new HttpClient();
-        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient));
+        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions("http://localhost:8000"), httpClient), ownsClient: true);
 
         // Get and create collection if it doesn't exist using the custom data model.
         var customDataModelCollection = vectorStore.GetCollection<string, Glossary>("skglossary");

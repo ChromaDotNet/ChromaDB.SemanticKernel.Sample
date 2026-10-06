@@ -64,6 +64,7 @@ public abstract class ChromaVectorStoreFixtureBase<TRecord> : IAsyncLifetime
         await this._chromaContainer.StartAsync();
         this.ChromaVectorStore = new ChromaVectorStore(
             new ChromaClient(new ChromaConfigurationOptions(this._chromaContainer.GetConnectionString()), this._httpClient),
+            ownsClient: true,
             new() { EmbeddingGenerator = this.EmbeddingGenerator });
 
         this.VectorStoreRecordCollection = await this.InitializeRecordCollectionAsync();

@@ -37,7 +37,7 @@ public sealed class MultiStoreTests(ChromaFixture fixture, ITestOutputHelper tes
     {
         var output = new RecordingOutput(testOutput);
         using var httpClient = new HttpClient();
-        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient));
+        using var vectorStore = new ChromaVectorStore(new ChromaClient(new ChromaConfigurationOptions(fixture.Endpoint), httpClient), ownsClient: true);
 
         var processor = new VectorStore_VectorSearch_MultiStore_Common(vectorStore, new WordEmbeddingGenerator(EmbeddingDimensions), output);
         await processor.IngestDataAndSearchAsync("skglossaryWithoutDI", () => Guid.NewGuid());
