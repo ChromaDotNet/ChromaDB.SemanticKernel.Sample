@@ -2,7 +2,7 @@
 
 # ChromaDB.SemanticKernel.Sample
 
-[Semantic Kernel](https://learn.microsoft.com/semantic-kernel/) samples that use [Chroma](https://www.trychroma.com/) as the vector store through [ChromaDotNet.VectorData](https://www.nuget.org/packages/ChromaDotNet.VectorData).
+[Semantic Kernel](https://learn.microsoft.com/semantic-kernel/) samples that use [Chroma](https://www.trychroma.com/) as the vector store through [CommunityToolkit.VectorData.Chroma](https://www.nuget.org/packages/CommunityToolkit.VectorData.Chroma). It is the Chroma provider of the [AI Community Toolkit](https://github.com/CommunityToolkit/AI).
 
 They follow the structure of the Semantic Kernel .NET samples: the [concept samples](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/Concepts) and the [text search steps](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/GettingStartedWithTextSearch). Each sample is an xUnit test that runs against real models when it needs one. Chroma replaces the vector store that the original sample uses. The samples that use a chat model also come with models that run locally in Ollama.
 

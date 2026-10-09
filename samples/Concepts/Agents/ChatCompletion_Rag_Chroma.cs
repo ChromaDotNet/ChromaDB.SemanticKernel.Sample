@@ -3,7 +3,7 @@
 using Azure.AI.OpenAI;
 using Azure.Identity;
 using ChromaDB.Client;
-using ChromaDB.VectorData;
+using CommunityToolkit.VectorData.Chroma;
 using Memory.VectorStoreFixtures;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.VectorData;

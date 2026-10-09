@@ -1,5 +1,5 @@
 using ChromaDB.Client;
-using ChromaDB.VectorData;
+using CommunityToolkit.VectorData.Chroma;
 using Memory;
 using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
