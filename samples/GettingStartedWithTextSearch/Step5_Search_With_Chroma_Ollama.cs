@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft. All rights reserved.
 
-using ChromaDB.VectorData;
+using CommunityToolkit.VectorData.Chroma;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.Ollama;
 using Microsoft.SemanticKernel.Data;

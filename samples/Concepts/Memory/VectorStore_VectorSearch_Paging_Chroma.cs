@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 using ChromaDB.Client;
-using ChromaDB.VectorData;
+using CommunityToolkit.VectorData.Chroma;
 using Memory.VectorStoreFixtures;
 using Microsoft.Extensions.VectorData;
 

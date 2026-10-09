@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft. All rights reserved.
 
 using Azure.Identity;
-using ChromaDB.VectorData;
+using CommunityToolkit.VectorData.Chroma;
 using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.Connectors.AzureOpenAI;
 using Microsoft.SemanticKernel.Data;
