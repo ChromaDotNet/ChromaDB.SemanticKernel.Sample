@@ -6,7 +6,7 @@
 
 They follow the structure of the Semantic Kernel .NET samples: the [concept samples](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/Concepts) and the [text search steps](https://github.com/microsoft/semantic-kernel/tree/main/dotnet/samples/GettingStartedWithTextSearch). Each sample is an xUnit test that runs against real models when it needs one. Chroma replaces the vector store that the original sample uses. The samples that use a chat model also come with models that run locally in Ollama.
 
-> ChromaDotNet is an independent community project that provides .NET libraries and tools for Chroma. Independent project. Not affiliated with, endorsed by or sponsored by Chroma Inc. CHROMA is a registered trademark of Chroma Inc., used here only to describe compatibility.
+> ChromaDotNet is an independent community project that provides .NET libraries and tools for Chroma. Independent project. Not affiliated with, endorsed by or sponsored by Chroma Inc. CHROMA is a registered trademark of Chroma Inc., used here only to describe compatibility. We use the name "Chroma" only to say which software our projects work with. It does not mean that Chroma Inc. made, approved or supports them.
 
 Website: [chromadotnet.org](https://chromadotnet.org)
 
